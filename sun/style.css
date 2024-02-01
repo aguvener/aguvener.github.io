@@ -29,14 +29,6 @@ h1 {
   margin-bottom: 0%;
 }
 
-footer {
-  text-decoration: underline;
-  font-size: 10px;
-}
-
-.ft {text-align:center}
-.credit {position:fixed;bottom:0px;width:100%;}
-
 div {
   display: inline-block;
   line-height: 1;
