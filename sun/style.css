@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap');
+
+#hours {
+  font-size: 250px;
+}
+#minutes {
+  font-size: 200px;
+}
+#seconds {
+  font-size: 150px;
+}
+
+#content span {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 1%;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 125px;
+  margin: 5%;
+  margin-bottom: 0%;
+}
+
+footer {
+  text-decoration: underline;
+  font-size: 10px;
+}
+
+.ft {text-align:center}
+.credit {position:fixed;bottom:0px;width:100%;}
+
+div {
+  display: inline-block;
+  line-height: 1;
+  padding: 20px;
+  font-size: 40px;
+}
+
+a { color: inherit; } 
+
+#time {
+  padding: 5px;
+}
+
+span {
+  display: block;
+  font-size: 20px;
+}
+
+span.material-symbols-outlined {
+  cursor: pointer;
+}
+
+body {
+  text-align: center;
+  font-family: 'Nova Mono', monospace;
+  color: #000000;
+  background: radial-gradient(circle, #F29727, #D95A4E);
+}
+
+.sun-mode {
+  background: radial-gradient(circle,#D95A4E, #F29727);
+  color: white;
+}
+
+@media only screen and (max-width: 1200px) {
+  div {
+    display: inline-block;
+    line-height: 1;
+    padding: 50px;
+    font-size: 40px;
+  }
+}
