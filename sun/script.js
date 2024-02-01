@@ -10,11 +10,11 @@ fetch('https://ipapi.co/json/')
 });
 
 var reverse = false;
+var x = document.getElementById("status");
 
 function sunmodechange() {
 	var element = document.body;
 	element.classList.toggle("sun-mode");
-	var x = document.getElementById("status");
 	if (reverse == false) {
 		reverse = true;
 	}
@@ -41,8 +41,14 @@ function makeTimer() {
 
 	if (timeLeftToSunrise < timeLeftToSunset && reverse == false) {
 		var timeLeft = timeLeftToSunrise;
+		if (x.innerHTML === "Sunset") {
+			x.innerHTML = "Sunrise";
+		}
 	} else {
 		var timeLeft = timeLeftToSunset;
+		if (x.innerHTML === "Sunrise") {
+			x.innerHTML = "Sunset";
+		}
 	}
 
 
