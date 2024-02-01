@@ -1,5 +1,14 @@
-var latitude = geoplugin_latitude();
-var longitude = geoplugin_longitude();
+fetch('https://ipapi.co/json/')
+.then(function(response) {
+  response.json().then(jsonData => {
+	latitude = jsonData.latitude;
+	longitude = jsonData.longitude;
+  });
+})
+.catch(function(error) {
+  console.log(error)
+});
+
 var reverse = false;
 
 function sunmodechange() {
