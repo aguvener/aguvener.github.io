@@ -1,69 +1,76 @@
-fetch('https://ipapi.co/json/')
-.then(function(response) {
-  response.json().then(jsonData => {
-	latitude = jsonData.latitude;
-	longitude = jsonData.longitude;
-  });
-})
-.catch(function(error) {
-  console.log(error)
-});
+let latitude, longitude;
+let isSunModeReversed = false;
+const statusElement = document.getElementById("status");
 
-var reverse = false;
-var x = document.getElementById("status");
+function fetchLocation() {
+    return fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(jsonData => {
+            latitude = jsonData.latitude;
+            longitude = jsonData.longitude;
+        })
+        .catch(error => {
+            console.error("Error fetching location:", error);
+            // Handle the error, e.g., display a message to the user
+        });
+}
 
 function sunmodechange() {
 	var element = document.body;
 	element.classList.toggle("sun-mode");
-	if (reverse == false) {
-		reverse = true;
-	}
-	else {
-		reverse = false;
-	}
-	if (x.innerHTML === "Sunset") {
-	  x.innerHTML = "Sunrise";
-	} else {
-	  x.innerHTML = "Sunset";
-	}
+	isSunModeReversed = !isSunModeReversed;
 	makeTimer();
-  
 }
+
+function setInnerHTML(selector, value) {
+	document.querySelector(selector  + ' .time-value').innerHTML = value;
+  }
+
+function formatTimeUnit(unit) {
+	return unit < 10 ? "0" + unit : unit;
+  }
 
 function makeTimer() {
-	let sunset = (Date.parse(new Date().sunset(latitude, longitude))) / 1000;
-	let sunrise = (Date.parse(new Date().sunrise(latitude, longitude))) / 1000;
+	let timeLeft;
 
-	let now = (Date.parse(new Date()) / 1000);
+	const tomorrow = new Date();
+	tomorrow.setDate(tomorrow.getDate() + 1);
 
-	var timeLeftToSunset = sunset - now;
-	var timeLeftToSunrise = sunrise - now;
+	const now = (Date.parse(new Date()) / 1000);
 
-	if (timeLeftToSunrise < timeLeftToSunset && reverse == false) {
-		var timeLeft = timeLeftToSunrise;
-		if (x.innerHTML === "Sunset") {
-			x.innerHTML = "Sunrise";
-		}
+	let sunsetToday = Date.parse(new Date().sunset(latitude, longitude)) / 1000;
+	let sunriseToday = Date.parse(new Date().sunrise(latitude, longitude)) / 1000;
+
+	const sunsetTomorrow = Date.parse(tomorrow.sunset(latitude, longitude)) / 1000;
+	const sunriseTomorrow = Date.parse(tomorrow.sunrise(latitude, longitude)) / 1000;
+
+	
+	if (sunriseToday < now) {
+		sunriseToday = sunriseTomorrow;
 	} else {
-		var timeLeft = timeLeftToSunset;
-		if (x.innerHTML === "Sunrise") {
-			x.innerHTML = "Sunset";
-		}
+		sunsetToday = sunsetTomorrow;
 	}
 
+	const timeLeftToSunset = sunsetToday - now;
+	const timeLeftToSunrise = sunriseToday - now;
 
-	var days = Math.floor(timeLeft / 86400); 
-	var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
-	var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600 )) / 60);
-	var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
+	if ((isSunModeReversed && timeLeftToSunset > timeLeftToSunrise) || (!isSunModeReversed && timeLeftToSunset < timeLeftToSunrise)) {
+		timeLeft = timeLeftToSunset;
+		statusElement.textContent = "Sunset";
+	} else {
+		timeLeft = timeLeftToSunrise;
+		statusElement.textContent = "Sunrise";
+	}
 
-	if (hours < 10) { hours = "0" + hours; }
-	if (minutes < 10) { minutes = "0" + minutes; }
-	if (seconds < 10) { seconds = "0" + seconds; }
+	const hours = formatTimeUnit(Math.floor(timeLeft / 3600));
+	const minutes = formatTimeUnit(Math.floor((timeLeft % 3600) / 60));
+	const seconds = formatTimeUnit(timeLeft % 60);
 
-	$("#hours").html(hours + "<span>hours</span>");
-	$("#minutes").html(minutes + "<span>minutes</span>");
-	$("#seconds").html(seconds + "<span>seconds</span>");
+	setInnerHTML("#hours", hours);
+	setInnerHTML("#minutes", minutes);
+	setInnerHTML("#seconds", seconds);
 }
+
+fetchLocation().then(makeTimer);
 
 setInterval(makeTimer, 1000);

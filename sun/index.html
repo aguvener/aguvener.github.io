@@ -5,29 +5,35 @@
   <title>Sun Timer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
-  <script src="sun.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link rel="stylesheet" href="./style.css">
-  
-
 </head>
 <body>
 <div id="content">
-  <h1 id="status">Sunset</h1>
+  <h1 id="status">Sun</h1>
     <span class="material-symbols-outlined" onclick="sunmodechange()">routine</span>
 </div>
 
 <br>
 
 <div id="timer">
-    <div id="hours"></div>
-    <div id="minutes"></div>
-    <div id="seconds"></div>
+  <div class="time-unit" id="hours">
+    <div class="time-value">0</div>
+    <div class="time-label">hours</div>
+  </div>
+  <div class="time-unit" id="minutes">
+    <div class="time-value">0</div>
+    <div class="time-label">minutes</div>
+  </div>
+  <div class="time-unit" id="seconds">
+    <div class="time-value">0</div>
+    <div class="time-label">seconds</div>
+  </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="sun.js"></script>
 <script src="script.js"></script>
 
 </body>

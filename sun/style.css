@@ -1,5 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap');
 
+body {
+  text-align: center;
+  font-family: 'Nova Mono', monospace;
+  color: #000000;
+  background: radial-gradient(circle, #F29727, #D95A4E);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sun-mode {
+  background: radial-gradient(circle,#D95A4E, #F29727);
+  color: white;
+}
+
+h1 {
+  font-size: 125px;
+  margin: 5%;
+  margin-bottom: 0%;
+}
+
 #hours {
   font-size: 250px;
 }
@@ -8,6 +29,35 @@
 }
 #seconds {
   font-size: 150px;
+}
+
+#timer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 0%;
+}
+
+#timer span {
+  align-items: baseline;
+}
+
+div.time-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.time-value {
+  display: inline-block;
+  align-items: flex-end;
+}
+
+div.time-label {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  font-size: 30px;
 }
 
 #content span {
@@ -23,20 +73,9 @@ button {
   cursor: pointer;
 }
 
-h1 {
-  font-size: 125px;
-  margin: 5%;
-  margin-bottom: 0%;
+a {
+  color: inherit;
 }
-
-div {
-  display: inline-block;
-  line-height: 1;
-  padding: 20px;
-  font-size: 40px;
-}
-
-a { color: inherit; } 
 
 #time {
   padding: 5px;
@@ -51,23 +90,54 @@ span.material-symbols-outlined {
   cursor: pointer;
 }
 
-body {
-  text-align: center;
-  font-family: 'Nova Mono', monospace;
-  color: #000000;
-  background: radial-gradient(circle, #F29727, #D95A4E);
+div {
+  display: inline-block;
+  line-height: 1;
+  padding: 20px;
 }
 
-.sun-mode {
-  background: radial-gradient(circle,#D95A4E, #F29727);
-  color: white;
-}
+@media only screen and (max-width: 768px) {
+  body {
+    font-size: 16px; /* Adjust font size for smaller screens */
+  }
 
-@media only screen and (max-width: 1200px) {
+  #timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 80px; /* Adjust h1 font size for smaller screens */
+    margin: 10px;
+  }
+
+  #content span {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 3%;
+  }
+
+  .time-unit {
+    font-size: 60px; /* Adjust font size for smaller screens */
+    margin-bottom: 10px; /* Add margin to separate time units */
+  }
+
+  #hours {
+    font-size: 150px; /* Adjust font size for smaller screens */
+  }
+
+  #minutes {
+    font-size: 120px; /* Adjust font size for smaller screens */
+  }
+
+  #seconds {
+    font-size: 90px; /* Adjust font size for smaller screens */
+  }
+
   div {
-    display: inline-block;
-    line-height: 1;
-    padding: 50px;
-    font-size: 40px;
+    padding: 10px; /* Adjust padding for smaller screens */
+    font-size: 20px; /* Adjust font size for smaller screens */
   }
 }
