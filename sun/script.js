@@ -47,7 +47,9 @@ function makeTimer() {
 	
 	if (sunriseToday < now) {
 		sunriseToday = sunriseTomorrow;
-	} else {
+	}
+
+	if (sunsetToday < now) {
 		sunsetToday = sunsetTomorrow;
 	}
 
