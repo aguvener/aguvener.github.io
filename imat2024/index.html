@@ -3,33 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form with CAPTCHA</title>
-    <!-- Load Cloudflare Turnstile -->
+    <title>University Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, input[type="number"], button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .cf-turnstile {
+            margin-top: 15px;
+        }
+    </style>
+    <!-- Include Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
-    <h1>Submit Your Form</h1>
-    <form id="form" action="https://u68y1vrioc.execute-api.eu-south-1.amazonaws.com/imatfilt" method="POST">
-        <label for="bio">Biology Score:</label>
-        <input type="text" id="bio" name="bio"><br><br>
 
-        <label for="chem">Chemistry Score:</label>
-        <input type="text" id="chem" name="chem"><br><br>
+    <div class="container">
+        <h1>Find Your University</h1>
+        <form id="filter-form">
+            <div class="form-group">
+                <label for="gn">General Knowledge (GN)</label>
+                <select id="gn" name="gn">
+                    <option value="">Select GN Score</option>
+                    <option value="0">0</option>
+                    <option value="4.1">4.1</option>
+                    <option value="2.6">2.6</option>
+                    <option value="1.1">1.1</option>
+                    <option value="1.5">1.5</option>
+                    <option value="4.5">4.5</option>
+                    <option value="2.2">2.2</option>
+                    <option value="3">3</option>
+                    <option value="6">6</option>
+                    <option value="-0.4">-0.4</option>
+                    <option value="0.7">0.7</option>
+                    <option value="-0.8">-0.8</option>
+                    <option value="-1.6">-1.6</option>
+                    <option value="0.3">0.3</option>
+                    <option value="-1.2">-1.2</option>
+                </select>
+            </div>
 
-        <label for="campus">Campus:</label>
-        <input type="text" id="campus" name="campus"><br><br>
+            <div class="form-group">
+                <label for="logic">Logic</label>
+                <select id="logic" name="logic">
+                    <option value="">Select Logic Score</option>
+                    <option value="-0.8">-0.8</option>
+                    <option value="1.8">1.8</option>
+                    <option value="4.1">4.1</option>
+                    <option value="0.3">0.3</option>
+                    <option value="0">0</option>
+                    <option value="4.5">4.5</option>
+                    <option value="1.1">1.1</option>
+                    <option value="5.6">5.6</option>
+                    <option value="3.7">3.7</option>
+                    <option value="-0.1">-0.1</option>
+                    <option value="1.5">1.5</option>
+                    <option value="6">6</option>
+                    <option value="2.6">2.6</option>
+                    <option value="3">3</option>
+                    <option value="7.5">7.5</option>
+                    <option value="0.7">0.7</option>
+                    <option value="2.2">2.2</option>
+                    <option value="-1.2">-1.2</option>
+                    <option value="-1.6">-1.6</option>
+                    <option value="-0.4">-0.4</option>
+                    <option value="-2">-2</option>
+                </select>
+            </div>
 
-        <!-- Turnstile CAPTCHA -->
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAAAmuRQiNwQrIByDu"></div><br>
+            <div class="form-group">
+                <label for="campus">Campus</label>
+                <select id="campus" name="campus">
+                    <option value="">Select Campus</option>
+                    <option value="sapienza">Sapienza</option>
+                    <option value="milano">Milano</option>
+                    <option value="bologna">Bologna</option>
+                    <option value="lvanvitelli">Lvanvitelli</option>
+                    <option value="torino">Torino</option>
+                    <option value="cagliari">Cagliari</option>
+                    <option value="messina">Messina</option>
+                    <option value="parma">Parma</option>
+                    <option value="federico">Federico</option>
+                    <option value="catania">Catania</option>
+                    <option value="dent_sienna">Dent Siena</option>
+                    <option value="bari">Bari</option>
+                    <option value="padova">Padova</option>
+                    <option value="marche">Marche</option>
+                    <option value="pavia">Pavia</option>
+                    <option value="torvergata">Torvergata</option>
+                    <option value="bicocca">Bicocca</option>
+                    <option value="esteri">Esteri</option>
+                </select>
+            </div>
 
-        <button type="submit">Submit</button>
-    </form>
+            <!-- Turnstile CAPTCHA -->
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAAmuRQiNwQrIByDu"></div>
+
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
 
     <script>
-        document.getElementById('form').addEventListener('submit', function(event) {
+        document.getElementById('filter-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Extract form data and Turnstile token
+            // Capture form data
             const formData = new FormData(event.target);
             const turnstileResponse = document.querySelector('.cf-turnstile iframe').contentWindow.document.getElementsByTagName('textarea')[0].value;
 
@@ -38,22 +158,23 @@
                 return;
             }
 
-            // Append Turnstile token to the form data
+            // Add CAPTCHA token to form data
             formData.append('turnstile_token', turnstileResponse);
 
-            // Send data to API Gateway
+            // Submit the data to your API Gateway
             fetch('https://u68y1vrioc.execute-api.eu-south-1.amazonaws.com/imatfilt', {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Success:', data);
+                console.log('Response:', data);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
         });
     </script>
+
 </body>
 </html>
