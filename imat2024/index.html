@@ -145,36 +145,44 @@
         </form>
     </div>
 
-    <script>
-        document.getElementById('filter-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+<script>
+    document.getElementById('filter-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-            // Capture form data
-            const formData = new FormData(event.target);
-            const turnstileResponse = document.querySelector('.cf-turnstile iframe').contentWindow.document.getElementsByTagName('textarea')[0].value;
+        // Capture form data
+        const formData = new FormData(event.target);
 
-            if (!turnstileResponse) {
-                alert('Please complete the CAPTCHA');
-                return;
+        // Get the Turnstile CAPTCHA token using the proper method
+        const turnstileResponse = grecaptcha.getResponse(); // Change to the correct method for Turnstile
+
+        if (!turnstileResponse) {
+            alert('Please complete the CAPTCHA');
+            return;
+        }
+
+        // Add CAPTCHA token to form data
+        formData.append('turnstile_token', turnstileResponse);
+
+        // Prepare for API submission (make sure you replace 'your-api-gateway-url' with your actual API endpoint)
+        fetch('https://u68y1vrioc.execute-api.eu-south-1.amazonaws.com/imatfilt', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
             }
-
-            // Add CAPTCHA token to form data
-            formData.append('turnstile_token', turnstileResponse);
-
-            // Submit the data to your API Gateway
-            fetch('https://u68y1vrioc.execute-api.eu-south-1.amazonaws.com/imatfilt', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Response:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response:', data);
+            alert('Submission successful! Check the console for the response.');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was an error with your submission. Check the console for more details.');
         });
-    </script>
+    });
+</script>
+
 
 </body>
 </html>
