@@ -147,14 +147,15 @@
 
 <script>
     document.getElementById('filter-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault(); // Prevent default form submission
 
         // Capture form data
         const formData = new FormData(event.target);
 
-        // Get the Turnstile CAPTCHA token using the proper method
-        const turnstileResponse = grecaptcha.getResponse(); // Change to the correct method for Turnstile
+        // Get the Turnstile CAPTCHA token using the correct method
+        const turnstileResponse = turnstile.getResponse();  // This correctly captures the CAPTCHA token
 
+        // Check if CAPTCHA was completed
         if (!turnstileResponse) {
             alert('Please complete the CAPTCHA');
             return;
@@ -163,7 +164,7 @@
         // Add CAPTCHA token to form data
         formData.append('turnstile_token', turnstileResponse);
 
-        // Prepare for API submission (make sure you replace 'your-api-gateway-url' with your actual API endpoint)
+        // Send data to your API
         fetch('https://u68y1vrioc.execute-api.eu-south-1.amazonaws.com/imatfilt', {
             method: 'POST',
             body: formData,
@@ -173,7 +174,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Response:', data);
+            console.log('Response from API:', data);
             alert('Submission successful! Check the console for the response.');
         })
         .catch(error => {
@@ -182,6 +183,7 @@
         });
     });
 </script>
+
 
 
 </body>
