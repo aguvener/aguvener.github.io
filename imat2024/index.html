@@ -32,7 +32,7 @@
         label {
             font-weight: bold;
         }
-        select, input[type="number"], button {
+        select, input[type="number"], input[type="text"], button {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -59,85 +59,46 @@
 <body>
 
     <div class="container">
-        <h1>Find Your University</h1>
+        <h1>Filter Universities</h1>
         <form id="filter-form">
             <div class="form-group">
-                <label for="gn">General Knowledge (GN)</label>
-                <select id="gn" name="gn">
-                    <option value="">Select GN Score</option>
-                    <option value="0">0</option>
-                    <option value="4.1">4.1</option>
-                    <option value="2.6">2.6</option>
-                    <option value="1.1">1.1</option>
-                    <option value="1.5">1.5</option>
-                    <option value="4.5">4.5</option>
-                    <option value="2.2">2.2</option>
-                    <option value="3">3</option>
-                    <option value="6">6</option>
-                    <option value="-0.4">-0.4</option>
-                    <option value="0.7">0.7</option>
-                    <option value="-0.8">-0.8</option>
-                    <option value="-1.6">-1.6</option>
-                    <option value="0.3">0.3</option>
-                    <option value="-1.2">-1.2</option>
-                </select>
+                <label for="bio">Biology (Bio)</label>
+                <input type="number" id="bio" name="bio" placeholder="Enter Biology score">
             </div>
 
             <div class="form-group">
                 <label for="logic">Logic</label>
-                <select id="logic" name="logic">
-                    <option value="">Select Logic Score</option>
-                    <option value="-0.8">-0.8</option>
-                    <option value="1.8">1.8</option>
-                    <option value="4.1">4.1</option>
-                    <option value="0.3">0.3</option>
-                    <option value="0">0</option>
-                    <option value="4.5">4.5</option>
-                    <option value="1.1">1.1</option>
-                    <option value="5.6">5.6</option>
-                    <option value="3.7">3.7</option>
-                    <option value="-0.1">-0.1</option>
-                    <option value="1.5">1.5</option>
-                    <option value="6">6</option>
-                    <option value="2.6">2.6</option>
-                    <option value="3">3</option>
-                    <option value="7.5">7.5</option>
-                    <option value="0.7">0.7</option>
-                    <option value="2.2">2.2</option>
-                    <option value="-1.2">-1.2</option>
-                    <option value="-1.6">-1.6</option>
-                    <option value="-0.4">-0.4</option>
-                    <option value="-2">-2</option>
-                </select>
+                <input type="number" id="logic" name="logic" placeholder="Enter Logic score">
+            </div>
+
+            <div class="form-group">
+                <label for="gn">General Knowledge (GN)</label>
+                <input type="number" id="gn" name="gn" placeholder="Enter General Knowledge score">
+            </div>
+
+            <div class="form-group">
+                <label for="chem">Chemistry (Chem)</label>
+                <input type="number" id="chem" name="chem" placeholder="Enter Chemistry score">
+            </div>
+
+            <div class="form-group">
+                <label for="math">Math</label>
+                <input type="number" id="math" name="math" placeholder="Enter Math score">
             </div>
 
             <div class="form-group">
                 <label for="campus">Campus</label>
-                <select id="campus" name="campus">
-                    <option value="">Select Campus</option>
-                    <option value="sapienza">Sapienza</option>
-                    <option value="milano">Milano</option>
-                    <option value="bologna">Bologna</option>
-                    <option value="lvanvitelli">Lvanvitelli</option>
-                    <option value="torino">Torino</option>
-                    <option value="cagliari">Cagliari</option>
-                    <option value="messina">Messina</option>
-                    <option value="parma">Parma</option>
-                    <option value="federico">Federico</option>
-                    <option value="catania">Catania</option>
-                    <option value="dent_sienna">Dent Siena</option>
-                    <option value="bari">Bari</option>
-                    <option value="padova">Padova</option>
-                    <option value="marche">Marche</option>
-                    <option value="pavia">Pavia</option>
-                    <option value="torvergata">Torvergata</option>
-                    <option value="bicocca">Bicocca</option>
-                    <option value="esteri">Esteri</option>
-                </select>
+                <input type="text" id="campus" name="campus" placeholder="Enter Campus name">
+            </div>
+
+            <div class="form-group">
+                <label for="code">Code</label>
+                <input type="text" id="code" name="code" placeholder="Enter code">
             </div>
 
             <!-- Turnstile CAPTCHA -->
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAAmuRQiNwQrIByDu"></div>
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAAmuRQiNwQrIByDu
+"></div>
 
             <div class="form-group">
                 <button type="submit">Submit</button>
@@ -145,46 +106,44 @@
         </form>
     </div>
 
-<script>
-    document.getElementById('filter-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
+    <script>
+        document.getElementById('filter-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent default form submission
 
-        // Capture form data
-        const formData = new FormData(event.target);
+            // Capture form data
+            const formData = new FormData(event.target);
 
-        // Get the Turnstile CAPTCHA token using the correct method
-        const turnstileResponse = turnstile.getResponse();  // This correctly captures the CAPTCHA token
+            // Get Turnstile token (required by policy)
+            const turnstileResponse = turnstile.getResponse();  // Correctly captures the CAPTCHA token
 
-        // Check if CAPTCHA was completed
-        if (!turnstileResponse) {
-            alert('Please complete the CAPTCHA');
-            return;
-        }
-
-        // Add CAPTCHA token to form data
-        formData.append('turnstile_token', turnstileResponse);
-
-        // Send data to your API
-        fetch('https://u68y1vrioc.execute-api.eu-south-1.amazonaws.com/imatfilt/filter', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
+            // Validate that CAPTCHA is completed
+            if (!turnstileResponse) {
+                alert('Please complete the CAPTCHA.');
+                return;
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Response from API:', data);
-            alert('Submission successful! Check the console for the response.');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was an error with your submission. Check the console for more details.');
+
+            // Append CAPTCHA token to form data
+            formData.append('turnstile_token', turnstileResponse);
+
+            // Submit the form data to your API
+            fetch('https://u68y1vrioc.execute-api.eu-south-1.amazonaws.com/imatfilt/filter', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response:', data);
+                alert('Submission successful!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your form.');
+            });
         });
-    });
-</script>
-
-
+    </script>
 
 </body>
 </html>
