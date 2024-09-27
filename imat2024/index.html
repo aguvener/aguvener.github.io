@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form with CAPTCHA</title>
+    <!-- Load Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+    <h1>Submit Your Form</h1>
+    <form id="form" action="https://u68y1vrioc.execute-api.eu-south-1.amazonaws.com/imatfilt" method="POST">
+        <label for="bio">Biology Score:</label>
+        <input type="text" id="bio" name="bio"><br><br>
+
+        <label for="chem">Chemistry Score:</label>
+        <input type="text" id="chem" name="chem"><br><br>
+
+        <label for="campus">Campus:</label>
+        <input type="text" id="campus" name="campus"><br><br>
+
+        <!-- Turnstile CAPTCHA -->
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAAmuRQiNwQrIByDu"></div><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Extract form data and Turnstile token
+            const formData = new FormData(event.target);
+            const turnstileResponse = document.querySelector('.cf-turnstile iframe').contentWindow.document.getElementsByTagName('textarea')[0].value;
+
+            if (!turnstileResponse) {
+                alert('Please complete the CAPTCHA');
+                return;
+            }
+
+            // Append Turnstile token to the form data
+            formData.append('turnstile_token', turnstileResponse);
+
+            // Send data to API Gateway
+            fetch('https://u68y1vrioc.execute-api.eu-south-1.amazonaws.com/imatfilt', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
